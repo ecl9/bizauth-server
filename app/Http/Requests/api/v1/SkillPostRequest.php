@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class LevelOfDifficultyPostRequest extends FormRequest
+class SkillPostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,18 +26,17 @@ class LevelOfDifficultyPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'difficulty_label' => ['bail', 'required', 'max:15'],
-            'difficulty_description' => 'max:100'
+            'skill_label' => 'bail|required|max:20',
+            'skill_description' => 'max:100'
         ];
-    } //Rule::unique('ba_lkup_levels_of_difficulty')->ignore($this->get('level_of_difficulty_id')),
+    }
 
     public function messages()
     {
         return [
-            'difficulty_label.required' => 'Label is required',
-            //'difficulty_label.unique' => 'Label already exists',
-            'difficulty_label.max' => 'Label too long. Should not exceed 15 characters',
-            'difficulty_description.max' => 'Description too long. Should not exceed 100 characters'
+            'skill_label.required' => 'Label is required.',
+            'skill_label.max' => 'Label should not exceed 15 characters',
+            'skill_description.max' => 'Description should not exceed 100 characters'
         ];
     }
 
