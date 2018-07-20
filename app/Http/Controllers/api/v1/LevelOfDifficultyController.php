@@ -28,7 +28,7 @@ class LevelOfDifficultyController extends Controller
      */
     public function store(LevelOfDifficultyPostRequest $request)
     {
-        $level = LevelOfDifficulty::create($request->all());
+        $level = LevelOfDifficulty::create($request->validated());
         return response($level, 201);
     }
 
