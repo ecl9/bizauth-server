@@ -22,6 +22,7 @@ Route::namespace('api\v1')->group(function(){
         Route::prefix('settings')->group(function(){
             Route::apiResource('levels', 'LevelOfDifficultyController');
             Route::apiResource('skills', 'SkillController');
+            Route::apiResource('micro-skills', 'MicroSkillController');
         });
     });
 });
