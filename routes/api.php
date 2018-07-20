@@ -19,6 +19,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('api\v1')->group(function(){
     Route::prefix('v1')->group(function(){
-        Route::apiResource('levels', 'LevelOfDifficultyController');
+        Route::prefix('settings')->group(function(){
+            Route::apiResource('levels', 'LevelOfDifficultyController');
+            Route::apiResource('skills', 'SkillController');
+        });
     });
 });
