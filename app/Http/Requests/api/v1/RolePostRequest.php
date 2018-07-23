@@ -6,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class ParadigmPostRequest extends FormRequest
+class RolePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,17 +26,17 @@ class ParadigmPostRequest extends FormRequest
     public function rules()
     {
         return [
-            'paradigm_label' => 'bail|required|max:45',
-            'paradigm_description' => 'max:100'
+            'role_label' => 'bail|required|max:20',
+            'role_description' => 'max:100'
         ];
     }
 
     public function messages()
     {
         return [
-            'paradigm_label.required' => 'Label is required.',
-            'paradigm_label.max' => 'Label should not exceed 45 characters',
-            'paradigm_description.max' => 'Description should not exceed 100 characters'
+            'role_label.required' => 'Label is required.',
+            'role_label.max' => 'Label should not exceed 20 characters',
+            'role_description.max' => 'Description should not exceed 100 characters'
         ];
     }
 
