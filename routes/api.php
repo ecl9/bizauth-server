@@ -25,6 +25,7 @@ Route::namespace('api\v1')->group(function(){
             Route::apiResource('paradigms', 'ParadigmController');
             Route::apiResource('roles', 'RoleController');
             Route::apiResource('skills', 'SkillController');
+            Route::apiResource('stimuli', 'StimuliController');
         });
     });
 });
