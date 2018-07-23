@@ -23,6 +23,7 @@ Route::namespace('api\v1')->group(function(){
             Route::apiResource('levels', 'LevelOfDifficultyController');
             Route::apiResource('micro-skills', 'MicroSkillController');
             Route::apiResource('paradigms', 'ParadigmController');
+            Route::apiResource('responses', 'ResponseController');
             Route::apiResource('roles', 'RoleController');
             Route::apiResource('skills', 'SkillController');
             Route::apiResource('stimuli', 'StimuliController');

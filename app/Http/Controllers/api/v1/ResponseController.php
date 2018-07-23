@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\api\v1\ParadigmPostRequest;
-use App\Paradigm;
+use App\Http\Requests\api\v1\ResponsePostRequest;
+use App\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ParadigmController extends Controller
+class ResponseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ParadigmController extends Controller
      */
     public function index()
     {
-        $paradigms = Paradigm::orderBy('paradigm_label', 'asc')->get();
-        return response($paradigms, 200);
+        $responses = Response::orderBy('response_label', 'asc')->get();
+        return response($responses, 200);
     }
 
     /**
@@ -26,10 +26,10 @@ class ParadigmController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ParadigmPostRequest $request)
+    public function store(ResponsePostRequest $request)
     {
-        $paradigm = Paradigm::create($request->all());
-        return response($paradigm, 201);
+        $response = Response::create($request->all());
+        return response($response, 201);
     }
 
     /**
@@ -40,8 +40,8 @@ class ParadigmController extends Controller
      */
     public function show($id)
     {
-        $paradigm = Paradigm::find($id);
-        return response($paradigm);
+        $response = Response::find($id);
+        return response($response, 200);
     }
 
     /**
@@ -51,11 +51,11 @@ class ParadigmController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ParadigmPostRequest $request, $id)
+    public function update(ResponsePostRequest $request, $id)
     {
-        $paradigm = Paradigm::find($id);
-        $paradigm->update($request->all());
-        return response($paradigm, 200);
+        $response = Response::find($id);
+        $response->update($request->all());
+        return response($response, 200);
     }
 
     /**
@@ -66,8 +66,8 @@ class ParadigmController extends Controller
      */
     public function destroy($id)
     {
-        $paradigm = Paradigm::find($id);
-        $paradigm->delete();
+        $response = Response::find($id);
+        $response->delete();
         return response(null, 204);
     }
 }
