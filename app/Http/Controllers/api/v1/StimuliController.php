@@ -16,7 +16,7 @@ class StimuliController extends Controller
      */
     public function index()
     {
-        $stimulus = Stimuli::orderBy('stimulus_label')->get();
+        $stimulus = Stimuli::orderBy('stimulus_label', 'asc')->get();
         return response($stimulus, 200);
     }
 

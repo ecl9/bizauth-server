@@ -16,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderBy('role_label')->get();
+        $roles = Role::orderBy('role_label', 'asc')->get();
         return response($roles, 200);
     }
 
