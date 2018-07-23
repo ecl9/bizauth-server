@@ -35,7 +35,7 @@ class MicroSkillPostRequest extends FormRequest
     {
         return [
             'micro_skill_label.required' => 'Label is required.',
-            'micro_skill_label.max' => 'Label should not exceed 15 characters',
+            'micro_skill_label.max' => 'Label should not exceed 50 characters',
             'micro_skill_description.max' => 'Description should not exceed 100 characters'
         ];
     }

@@ -35,7 +35,7 @@ class SkillPostRequest extends FormRequest
     {
         return [
             'skill_label.required' => 'Label is required.',
-            'skill_label.max' => 'Label should not exceed 15 characters',
+            'skill_label.max' => 'Label should not exceed 20 characters',
             'skill_description.max' => 'Description should not exceed 100 characters'
         ];
     }
