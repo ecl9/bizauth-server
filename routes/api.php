@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('api\v1')->group(function(){
     Route::prefix('v1')->group(function(){
+        Route::apiResource('lessons', 'LessonController');
         Route::prefix('settings')->group(function(){
+            Route::apiResource('categories', 'CategoryController');
+            Route::apiResource('lcids', 'LCIDController');
             Route::apiResource('levels', 'LevelOfDifficultyController');
             Route::apiResource('micro-skills', 'MicroSkillController');
             Route::apiResource('paradigms', 'ParadigmController');
