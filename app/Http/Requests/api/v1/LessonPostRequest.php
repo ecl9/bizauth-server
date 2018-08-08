@@ -58,6 +58,6 @@ class LessonPostRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        throw new HttpResponseException(response($validator->errors()->getMessages()));
+        throw new HttpResponseException(response($validator->errors()->getMessages(), 422));
     }
 }

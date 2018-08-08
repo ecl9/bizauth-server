@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Controllers\BaseController;
 use App\Http\Requests\api\v1\LessonPostRequest;
 use App\Lesson;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Input;
 
-class LessonController extends Controller
+class LessonController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -16,13 +18,20 @@ class LessonController extends Controller
      */
     public function index()
     {
+        $status = Input::get('status');
         $lessons = Lesson::orderBy('lesson_title', 'asc')
             ->with('paradigm:paradigm_id,paradigm_label')
             ->with('difficulty:level_of_difficulty_id,difficulty_label')
             ->with('status:status_id,status_label')
             ->with('courses')
-            ->select('lesson_title', 'lesson_content_version', 'lesson_paradigm_id', 'lesson_level_of_difficulty_id', 'lesson_status_id')
-            ->get();
+            ->with(['categories' => function($query){
+                $query->with('category');
+            }])
+            ->where('lesson_title', 'LIKE', "$this->q%")
+            ->select('lesson_id', 'lesson_title', 'lesson_content_version', 'lesson_paradigm_id', 'lesson_level_of_difficulty_id',
+                'lesson_status_id', 'created_at');
+        if($status) $lessons = $lessons->where('lesson_status_id', $status);
+        $lessons = $lessons->paginate($this->size);
         return response($lessons, 200);
     }
 
@@ -47,6 +56,7 @@ class LessonController extends Controller
     public function show($id)
     {
         $lesson = Lesson::find($id);
+        $lesson->load('categories');
         return response($lesson, 200);
     }
 

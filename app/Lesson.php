@@ -14,6 +14,7 @@ class Lesson extends Model
         'lesson_passing_percentage', 'lesson_cover_image_url', 'lesson_cover_thumbnail_image_url',
         'lesson_intro_video_url', 'lesson_outro_video_url', 'lesson_completion_badge_url',
         'lesson_passing_badge_url', 'lesson_host_for_url', 'lesson_status_id'];
+    protected $appends = ['challenges'];
 
     public function paradigm(){
         return $this->belongsTo('App\Paradigm', 'lesson_paradigm_id', 'paradigm_id');
@@ -31,7 +32,15 @@ class Lesson extends Model
         return $this->belongsTo('App\Status', 'lesson_status_id', 'status_id');
     }
 
+    public function categories(){
+        return $this->hasMany('App\LessonCategory', 'lesson_id', 'lesson_id');
+    }
+
     public function courses(){
         return $this->hasManyThrough('App\Course', 'App\CourseLesson', 'lesson_id', 'course_id');
+    }
+
+    public function getChallengesAttribute(){
+        return 0;
     }
 }

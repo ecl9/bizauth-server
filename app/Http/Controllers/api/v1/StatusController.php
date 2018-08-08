@@ -16,7 +16,8 @@ class StatusController extends Controller
      */
     public function index()
     {
-        $statuses = Status::orderBy('status_label', 'asc')->get();
+        $statuses = Status::orderBy('status_label', 'asc')
+            ->get();
         return response($statuses, 200);
     }
 
