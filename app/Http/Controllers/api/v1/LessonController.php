@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Controllers\BaseController;
 use App\Http\Requests\api\v1\LessonPostRequest;
 use App\Lesson;
+use App\LessonCategory;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Input;
@@ -43,7 +44,13 @@ class LessonController extends BaseController
      */
     public function store(LessonPostRequest $request)
     {
-        $lesson = Lesson::create($request->all());
+        $categories = $request->get('categories');
+        $lesson = Lesson::create($request->except(['categories']));
+        if($lesson->lesson_id){
+            foreach ($categories as $c){
+                $lesson->categories()->save(new LessonCategory(['category_id' => $c->category_id]));
+            }
+        }
         return response($lesson, 201);
     }
 
@@ -69,8 +76,13 @@ class LessonController extends BaseController
      */
     public function update(LessonPostRequest $request, $id)
     {
+        $categories = $request->get('categories');
         $lesson = Lesson::find($id);
-        $lesson->update($request->all());
+        $lesson->update($request->except(['categories']));
+        $lesson->categories()->delete();
+        foreach ($categories as $c){
+            $lesson->categories()->save(new LessonCategory(['category_id' => $c['category_id']]));
+        }
         return response($lesson, 200);
     }
 
@@ -84,6 +96,15 @@ class LessonController extends BaseController
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
+        return response(null, 204);
+    }
+
+    public function setFirstChallenge(Request $request){
+        $lesson = Lesson::find($request->get('lessonId'));
+        if($lesson){
+            $lesson->lesson_first_challenge_id = $request->get('challengeId');
+            $lesson->save();
+        }
         return response(null, 204);
     }
 }
