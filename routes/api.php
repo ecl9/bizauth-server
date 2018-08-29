@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('api\v1')->group(function(){
     Route::prefix('v1')->group(function(){
+        Route::apiResource('challenges', 'ChallengeController');
+        Route::post('lessons/set-first-challenge', 'LessonController@setFirstChallenge');
         Route::apiResource('lessons', 'LessonController');
         Route::prefix('settings')->group(function(){
             Route::apiResource('categories', 'CategoryController');
