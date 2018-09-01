@@ -21,15 +21,13 @@ class LessonController extends BaseController
     {
         $status = Input::get('status');
         $lessons = Lesson::orderBy('lesson_title', 'asc')
-            ->with('paradigm:paradigm_id,paradigm_label')
-            ->with('difficulty:level_of_difficulty_id,difficulty_label')
             ->with('status:status_id,status_label')
             ->with('courses')
             ->with(['categories' => function($query){
-                $query->with('category');
+                $query->with('category:category_id,category_label');
             }])
             ->where('lesson_title', 'LIKE', "$this->q%")
-            ->select('lesson_id', 'lesson_title', 'lesson_content_version', 'lesson_paradigm_id', 'lesson_level_of_difficulty_id',
+            ->select('lesson_id', 'lesson_title', 'lesson_first_challenge_id', 'lesson_content_version', 'lesson_paradigm_id', 'lesson_level_of_difficulty_id',
                 'lesson_status_id', 'created_at');
         if($status) $lessons = $lessons->where('lesson_status_id', $status);
         $lessons = $lessons->paginate($this->size);
