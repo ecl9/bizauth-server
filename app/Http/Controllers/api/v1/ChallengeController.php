@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Challenge;
+use App\ChallengeResponse;
 use App\Http\Requests\api\v1\ChallengePostRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -30,6 +31,18 @@ class ChallengeController extends Controller
     {
         $challenge = Challenge::create($request->except(['challenge_responses', 'response_challenges', 'challenge_micro_skills']));
         $this->saveChallengeSkillsAndResponses($challenge, $request);
+
+        //if adding of challenge came from response,
+        //it has an attached response id and should be set as the next challenge of the previous challenge
+        if($request->get('response_id')){
+            $response = ChallengeResponse::find($request->get('response_id'));
+            $response->nextChallenges()->delete();
+            $response->nextChallenges()->create([
+                'challenge_response_id' => $response->id,
+                'next_challenge_id' => $challenge->challenge_id
+            ]);
+        }
+
         return response($challenge, 201);
     }
 

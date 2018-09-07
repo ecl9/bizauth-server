@@ -45,8 +45,10 @@ class LessonController extends BaseController
         $categories = $request->get('categories');
         $lesson = Lesson::create($request->except(['categories']));
         if($lesson->lesson_id){
-            foreach ($categories as $c){
-                $lesson->categories()->save(new LessonCategory(['category_id' => $c->category_id]));
+            if($categories && count($categories) > 0){
+                foreach ($categories as $c){
+                    $lesson->categories()->save(new LessonCategory(['category_id' => $c['category_id']]));
+                }
             }
         }
         return response($lesson, 201);
@@ -90,10 +92,17 @@ class LessonController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $lesson = Lesson::find($id);
         $lesson->delete();
+        return response(null, 204);
+    }
+
+    public function destroyMany(Request $request){
+        if($request->get('ids')){
+            Lesson::whereIn('lesson_id', $request->get('ids'))->delete();
+        }
         return response(null, 204);
     }
 

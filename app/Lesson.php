@@ -63,7 +63,7 @@ class Lesson extends Model
                     $c = $challenge->nextChallenges[$key]->challenge;
                     $challenges[] = $c;
                     if($c->nextChallenges()->count() > 0){
-                        $this->testRecursion($c);
+                        $this->getRelatedChallenges($c);
                     }
                 }
                 if(count($challenges) > 0){
